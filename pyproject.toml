@@ -26,6 +26,16 @@ dependencies = [
     "redis>=6.4.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+    "coverage>=7.0.0",
+    "locust>=2.0.0",
+]
+
 [tool.setuptools.packages.find]
 include = ["apps*", "config*"]
 exclude = [
