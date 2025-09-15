@@ -1,7 +1,7 @@
-from django.urls import path
+from django.urls import path, URLPattern
 from . import views
 
-urlpatterns = [
+urlpatterns: list[URLPattern] = [
     path("register/", views.register, name="register"),
     path("login/", views.login, name="login"),
     path("verify-email/", views.verify_email, name="verify_email"),
