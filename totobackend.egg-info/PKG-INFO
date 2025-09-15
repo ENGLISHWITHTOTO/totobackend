@@ -28,6 +28,7 @@ Requires-Dist: gunicorn==21.2.0
 Requires-Dist: isort==5.12.0
 Requires-Dist: locust==2.17.0
 Requires-Dist: mypy==1.6.1
+Requires-Dist: pbr>=7.0.1
 Requires-Dist: pillow==11.3.0
 Requires-Dist: pre-commit==3.5.0
 Requires-Dist: psycopg2-binary==2.9.10
