@@ -15,7 +15,10 @@ class UserManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_fields)
-        user.set_password(password or "password")  # Default password for tests
+        if password:
+            user.set_password(password)
+        else:
+            raise ValueError("Password is required")
         user.save(using=self._db)
         return user
 
@@ -44,18 +47,20 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = UserManager()
+    objects = UserManager()  # type: ignore
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
     class Meta:
+        """Meta class for User model."""
+
         db_table = "users"
         verbose_name = _("User")
         verbose_name_plural = _("Users")
 
-    def __str__(self):
-        return self.email
+    def __str__(self) -> str:
+        return str(self.email)
 
 
 class UserProfile(models.Model):
@@ -80,12 +85,14 @@ class UserProfile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        """Meta class for UserProfile model."""
+
         db_table = "user_profiles"
         verbose_name = _("User Profile")
         verbose_name_plural = _("User Profiles")
 
-    def __str__(self):
-        return f"{self.user.email} - {self.role}"
+    def __str__(self) -> str:
+        return f"{self.user.email if self.user else 'Unknown'} - {self.role}"  # pylint: disable=no-member
 
 
 class EmailVerification(models.Model):
@@ -98,12 +105,14 @@ class EmailVerification(models.Model):
     is_used = models.BooleanField(default=False)
 
     class Meta:
+        """Meta class for EmailVerification model."""
+
         db_table = "email_verifications"
         verbose_name = _("Email Verification")
         verbose_name_plural = _("Email Verifications")
 
-    def __str__(self):
-        return f"Verification for {self.user.email}"
+    def __str__(self) -> str:
+        return f"Verification for {self.user.email if self.user else 'Unknown'}"  # pylint: disable=no-member
 
 
 class PasswordReset(models.Model):
@@ -116,9 +125,11 @@ class PasswordReset(models.Model):
     is_used = models.BooleanField(default=False)
 
     class Meta:
+        """Meta class for PasswordReset model."""
+
         db_table = "password_resets"
         verbose_name = _("Password Reset")
         verbose_name_plural = _("Password Resets")
 
-    def __str__(self):
-        return f"Reset for {self.user.email}"
+    def __str__(self) -> str:
+        return f"Reset for {self.user.email if self.user else 'Unknown'}"  # pylint: disable=no-member
