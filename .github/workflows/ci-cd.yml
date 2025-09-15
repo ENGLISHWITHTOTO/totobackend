@@ -67,7 +67,7 @@ jobs:
 
       - name: Check code formatting with black
         run: |
-          black --check --diff .
+          black --check --diff . --extend-exclude=migrations/
 
       - name: Type check with mypy
         run: |
@@ -205,7 +205,7 @@ jobs:
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
-        with: 
+        with:
           sarif_file: "trivy-results.sarif"
 
   performance-test:

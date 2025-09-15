@@ -7,6 +7,8 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
+      - id: mixed-line-ending
+        args: [--fix=lf]
       - id: trailing-whitespace
         exclude: ^(.*\.md|.*\.yml|.*\.yaml|.*\.txt)$
       - id: end-of-file-fixer
@@ -22,27 +24,30 @@ repos:
       - id: check-merge-conflict
       - id: debug-statements
       - id: detect-private-key
-      - id: mixed-line-ending
-        args: [--fix=lf]
 
   # Local hooks - use tools from virtual environment
   - repo: local
     hooks:
-      # Python code formatting
-      - id: black
-        name: black
-        entry: black
-        language: system
-        args: [--line-length=88, --target-version=py312]
-        files: \.py$
-        exclude: ^(migrations/|venv/|env/|\.venv/)
-
-      # Python import sorting
+      # Python import sorting (runs before Black)
       - id: isort
         name: isort
         entry: isort
         language: system
-        args: [--profile=black, --line-length=88]
+        args: [--profile=black, --line-length=88, --skip=migrations/]
+        files: \.py$
+        exclude: ^(migrations/|venv/|env/|\.venv/)
+
+      # Python code formatting (runs after cleanup hooks)
+      - id: black
+        name: black
+        entry: black
+        language: system
+        args:
+          [
+            --line-length=88,
+            --target-version=py312,
+            --extend-exclude=migrations/,
+          ]
         files: \.py$
         exclude: ^(migrations/|venv/|env/|\.venv/)
 
@@ -52,8 +57,8 @@ repos:
         entry: flake8
         language: system
         args:
-        - --max-line-length=88
-        - --extend-ignore=E203,W503,E501,C901,W504,E402
+          - --max-line-length=88
+          - --extend-ignore=E203,W503,E501,C901,W504,E402
         files: \.py$
         exclude: ^(migrations/|venv/|env/|\.venv/)
 
@@ -71,7 +76,7 @@ repos:
         name: bandit
         entry: bandit
         language: system
-        args: [-f, txt, -x, tests/,migrations/]
+        args: [-f, txt, -x, tests/, migrations/]
         pass_filenames: false
         files: \.py$
         exclude: ^(migrations/|venv/|env/|\.venv/|tests/)
@@ -82,12 +87,9 @@ repos:
         entry: pylint
         language: system
         args:
-        - --disable=C0114,C0116,R0903,W0613
-
+          - --disable=C0114,C0116,R0903,W0613
         files: \.py$
         exclude: ^(migrations/|venv/|env/|\.venv/)
-
-
 
 # Global configuration
 default_stages: [commit]
