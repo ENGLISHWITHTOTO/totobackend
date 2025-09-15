@@ -1357,6 +1357,7 @@ dependencies = [
     { name = "python-decouple" },
     { name = "python-dotenv" },
     { name = "redis" },
+    { name = "setuptools" },
 ]
 
 [package.optional-dependencies]
@@ -1395,6 +1396,7 @@ requires-dist = [
     { name = "python-decouple", specifier = "==3.8" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "redis", specifier = "==6.4.0" },
+    { name = "setuptools", specifier = "<81" },
 ]
 provides-extras = ["dev"]
 

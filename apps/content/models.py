@@ -108,4 +108,4 @@ class Exercise(models.Model):
         ordering = ["order"]
 
     def __str__(self):
-        return f"{self.lesson.title} - {self.question[:50]}"
+        return f"{self.lesson.title} - {self.question}"

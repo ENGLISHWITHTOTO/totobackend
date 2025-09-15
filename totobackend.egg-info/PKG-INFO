@@ -22,6 +22,7 @@ Requires-Dist: psycopg2-binary==2.9.10
 Requires-Dist: python-decouple==3.8
 Requires-Dist: python-dotenv>=1.1.1
 Requires-Dist: redis==6.4.0
+Requires-Dist: setuptools<81
 Provides-Extra: dev
 Requires-Dist: black>=23.0.0; extra == "dev"
 Requires-Dist: flake8>=6.0.0; extra == "dev"
