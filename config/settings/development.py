@@ -1,3 +1,4 @@
+import os
 from .base import *
 
 DEBUG = True
@@ -5,17 +6,8 @@ DEBUG = True
 # Development specific settings
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
-# Database for development
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME", default="totobackend_dev"),
-        "USER": config("DB_USER", default="postgres"),
-        "PASSWORD": config("DB_PASSWORD", default="password"),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5432"),
-    }
-}
+# Database for development - using SQLite for simplicity
+# DATABASES configuration is inherited from base.py
 
 # Development email backend
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

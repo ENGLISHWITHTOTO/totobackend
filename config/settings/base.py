@@ -1,13 +1,22 @@
 import os
 from pathlib import Path
-from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+
 # Security
-SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", default="django-insecure-fallback-key-change-this-in-production"
+)
+DEBUG = os.getenv("DEBUG", default="False").lower() == "true"
+ALLOWED_HOSTS = (
+    os.getenv("ALLOWED_HOSTS", default="").split(",")
+    if os.getenv("ALLOWED_HOSTS")
+    else []
+)
 
 # Application definition
 DJANGO_APPS = [
@@ -39,8 +48,6 @@ LOCAL_APPS = [
     "apps.ai",
     "apps.chat",
     "apps.notifications",
-    "apps.translation",
-    "apps.study_abroad",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -63,12 +70,8 @@ ROOT_URLCONF = "config.urls"
 # Database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME", default="totobackend"),
-        "USER": config("DB_USER", default="postgres"),
-        "PASSWORD": config("DB_PASSWORD", default="password"),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5432"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -76,7 +79,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": config("REDIS_URL", default="redis://127.0.0.1:6379/1"),
+        "LOCATION": os.getenv("REDIS_URL", default="redis://127.0.0.1:6379/1"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
@@ -143,6 +146,23 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+# Templates
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
 # Static and Media Files
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -167,12 +187,14 @@ AUTH_USER_MODEL = "users.User"
 
 # Email Configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
-EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@englishwithtoto.com")
+EMAIL_HOST = os.getenv("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT = os.getenv("EMAIL_PORT", default=587)
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", default=True)
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", default="")
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL", default="noreply@englishwithtoto.com"
+)
 
 # Frontend URL for email links
-FRONTEND_URL = config("FRONTEND_URL", default="http://localhost:3000")
+FRONTEND_URL = os.getenv("FRONTEND_URL", default="http://localhost:3000")
