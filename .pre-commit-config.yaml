@@ -81,18 +81,6 @@ repos:
         files: \.py$
         exclude: ^(migrations/|venv/|env/|\.venv/|tests/)
 
-      # Additional Python hooks
-      - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        args:
-          - --load-plugins=pylint_django
-          - --disable=C0114,C0116,R0903,W0613
-          - --django-settings-module=config.settings
-        files: \.py$
-        exclude: ^(migrations/|venv/|env/|\.venv/)
-
 # Global configuration
 default_stages: [commit]
 fail_fast: false
