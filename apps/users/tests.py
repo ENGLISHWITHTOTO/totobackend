@@ -1,19 +1,23 @@
-from django.test import TestCase
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError
-from django.utils import timezone
 from datetime import timedelta
-from apps.users.models import UserProfile, EmailVerification, PasswordReset
+
+from django.contrib.auth import get_user_model
+from django.db import IntegrityError
+from django.test import TestCase
+from django.utils import timezone
+
+from apps.users.models import EmailVerification, PasswordReset, UserProfile
 
 User = get_user_model()
 
 
 class UserModelTest(TestCase):
+    """Test cases for User model."""
+
     def setUp(self):
         self.user_data = {
             "email": "test@example.com",
             "username": "testuser",
+            "password": "testpass123",
             "first_name": "Test",
             "last_name": "User",
             "phone": "+1234567890",
@@ -27,7 +31,7 @@ class UserModelTest(TestCase):
         self.assertEqual(user.email, "test@example.com")
         self.assertEqual(user.username, "testuser")
         self.assertFalse(user.is_verified)
-        self.assertTrue(user.check_password("password"))
+        self.assertTrue(user.check_password("testpass123"))
 
     def test_user_str_representation(self):
         """Test user string representation"""
@@ -38,7 +42,9 @@ class UserModelTest(TestCase):
         """Test that email must be unique"""
         User.objects.create_user(**self.user_data)
         with self.assertRaises(IntegrityError):
-            User.objects.create_user(email="test@example.com", username="anotheruser")
+            User.objects.create_user(
+                email="test@example.com", username="anotheruser", password="testpass123"
+            )
 
     def test_user_required_fields(self):
         """Test that email is required"""
@@ -47,9 +53,11 @@ class UserModelTest(TestCase):
 
 
 class UserProfileModelTest(TestCase):
+    """Test cases for UserProfile model."""
+
     def setUp(self):
         self.user = User.objects.create_user(
-            email="test@example.com", username="testuser"
+            email="test@example.com", username="testuser", password="testpass123"
         )
 
     def test_create_user_profile(self):
@@ -76,9 +84,11 @@ class UserProfileModelTest(TestCase):
 
 
 class EmailVerificationModelTest(TestCase):
+    """Test cases for EmailVerification model."""
+
     def setUp(self):
         self.user = User.objects.create_user(
-            email="test@example.com", username="testuser"
+            email="test@example.com", username="testuser", password="testpass123"
         )
 
     def test_create_email_verification(self):
@@ -103,9 +113,11 @@ class EmailVerificationModelTest(TestCase):
 
 
 class PasswordResetModelTest(TestCase):
+    """Test cases for PasswordReset model."""
+
     def setUp(self):
         self.user = User.objects.create_user(
-            email="test@example.com", username="testuser"
+            email="test@example.com", username="testuser", password="testpass123"
         )
 
     def test_create_password_reset(self):

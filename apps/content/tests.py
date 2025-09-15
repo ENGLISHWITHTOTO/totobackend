@@ -1,12 +1,14 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-from apps.content.models import Category, Subcategory, Lesson, Exercise
+from django.test import TestCase
+
+from apps.content.models import Category, Exercise, Lesson, Subcategory
 
 User = get_user_model()
 
 
 class CategoryModelTest(TestCase):
+    """Test cases for Category model."""
+
     def setUp(self):
         self.category_data = {
             "name": "English Grammar",
@@ -48,6 +50,8 @@ class CategoryModelTest(TestCase):
 
 
 class SubcategoryModelTest(TestCase):
+    """Test cases for Subcategory model."""
+
     def setUp(self):
         self.category = Category.objects.create(
             name="English Grammar", description="Learn English grammar fundamentals"
@@ -86,9 +90,11 @@ class SubcategoryModelTest(TestCase):
 
 
 class LessonModelTest(TestCase):
+    """Test cases for Lesson model."""
+
     def setUp(self):
         self.user = User.objects.create_user(
-            email="teacher@example.com", username="teacher"
+            email="teacher@example.com", username="teacher", password="testpass123"
         )
         self.category = Category.objects.create(
             name="English Grammar", description="Learn English grammar fundamentals"
@@ -155,9 +161,11 @@ class LessonModelTest(TestCase):
 
 
 class ExerciseModelTest(TestCase):
+    """Test cases for Exercise model."""
+
     def setUp(self):
         self.user = User.objects.create_user(
-            email="teacher@example.com", username="teacher"
+            email="teacher@example.com", username="teacher", password="testpass123"
         )
         self.category = Category.objects.create(
             name="English Grammar", description="Learn English grammar fundamentals"

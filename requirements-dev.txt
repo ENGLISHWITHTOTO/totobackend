@@ -12,6 +12,7 @@ black==23.9.1
 flake8==6.1.0
 mypy==1.6.1
 bandit==1.7.5
+pylint-django==2.5.3
 
 # Performance testing
 locust==2.17.0
