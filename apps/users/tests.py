@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.utils import timezone
 from datetime import timedelta
-from apps.users.models import User, UserProfile, EmailVerification, PasswordReset
+from apps.users.models import UserProfile, EmailVerification, PasswordReset
 
 User = get_user_model()
 

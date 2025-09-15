@@ -9,6 +9,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "bandit==1.7.5",
+    "black==23.9.1",
     "celery==5.3.4",
     "channels==4.3.1",
     "channels-redis==4.3.0",
@@ -16,18 +18,34 @@ dependencies = [
     "django-celery-beat==2.8.1",
     "django-celery-results==2.6.0",
     "django-cors-headers==4.8.0",
+    "django-debug-toolbar==4.2.0",
+    "django-extensions==3.2.3",
     "django-filter==23.5",
     "django-redis==6.0.0",
+    "django-stubs==4.2.7",
     "djangorestframework==3.16.1",
     "djangorestframework-simplejwt==5.3.0",
     "drf-yasg==1.21.10",
+    "factory-boy==3.3.0",
+    "flake8==6.1.0",
+    "flake8-docstrings==1.7.0",
     "gunicorn==21.2.0",
+    "isort==5.12.0",
+    "locust==2.17.0",
+    "mypy==1.6.1",
     "pillow==11.3.0",
+    "pre-commit==3.5.0",
     "psycopg2-binary==2.9.10",
+    "pylint==3.0.3",
+    "pytest==7.4.3",
+    "pytest-cov==4.1.0",
+    "pytest-django==4.7.0",
     "python-decouple==3.8",
     "python-dotenv>=1.1.1",
     "redis==6.4.0",
     "setuptools<81",
+    "types-redis==4.6.0.11",
+    "types-requests==2.31.0.10",
 ]
 
 [project.optional-dependencies]
