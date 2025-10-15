@@ -84,3 +84,6 @@ desktop.ini
 
 # celery
 celerybeat-schedule
+
+push
+push.ps1

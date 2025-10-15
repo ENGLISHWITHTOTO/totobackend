@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "core",
+    "teacher",
 ]
 
 MIDDLEWARE = [
@@ -104,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
+
+AUTH_USER_MODEL = "core.User"
 
 TIME_ZONE = "UTC"
 
