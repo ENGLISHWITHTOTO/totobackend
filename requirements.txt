@@ -1,0 +1,11 @@
+Django>=4.2,<5.0
+gunicorn>=20.1.0
+psycopg2-binary>=2.9.6
+django-environ>=0.10.0
+python-dotenv>=1.0.0
+
+# Optional / dev
+pytest>=7.0
+pytest-django>=4.5
+black>=24.3.0
+isort>=5.12.0
