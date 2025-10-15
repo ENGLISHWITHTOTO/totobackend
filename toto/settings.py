@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "core",
     "teacher",
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "toto.urls"
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
 
 TEMPLATES = [
     {
