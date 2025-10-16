@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "core",
     "teacher",
     'rest_framework',
-    'drf_yasg',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -56,8 +56,12 @@ MIDDLEWARE = [
 ROOT_URLCONF = "toto.urls"
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
+      'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+      'DEFAULT_AUTHENTICATION_CLASSES': [
+          'rest_framework.authentication.SessionAuthentication',
+          'rest_framework_simplejwt.authentication.JWTAuthentication',
+      ],
+  }
 
 
 TEMPLATES = [

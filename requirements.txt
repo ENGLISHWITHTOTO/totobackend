@@ -13,3 +13,4 @@ isort>=5.12.0
 drf-yasg
 djangorestframework
 drf-spectacular
+djangorestframework-simplejwt
