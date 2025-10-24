@@ -9,4 +9,5 @@ push:
 	git add .
 	git commit -m "$(m)"
 	git push
-	@echo "✅ Changes pushed successfully with commit: \"$(m)\""
+	@echo "✅ Changes pushed successfully with commit: \"$(m)\""om run dev
+	

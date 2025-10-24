@@ -37,10 +37,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third-party apps
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "corsheaders",
+    "django_filters",
+    "drf_yasg",
+    # Project apps
     "core",
     "teacher",
-    'rest_framework',
-    'drf_spectacular',
+    "student",
+    "homestay",
 ]
 
 MIDDLEWARE = [
@@ -56,12 +63,18 @@ MIDDLEWARE = [
 ROOT_URLCONF = "toto.urls"
 
 REST_FRAMEWORK = {
-      'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-      'DEFAULT_AUTHENTICATION_CLASSES': [
-          'rest_framework.authentication.SessionAuthentication',
-          'rest_framework_simplejwt.authentication.JWTAuthentication',
-      ],
-  }
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ],
+}
 
 
 TEMPLATES = [
@@ -131,6 +144,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+# Media files
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
